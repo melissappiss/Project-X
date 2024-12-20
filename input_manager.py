@@ -4,16 +4,19 @@ from bodies.planet import Planet
 from bodies.star import Star
 from time_manager import TimeStep
 from run import run_simulation
+import sys 
 
 bodies = []
 
 
 def add_body_gui():
 
-
     def add_body():
+
         body_type = body_type_var.get()
+
         try:
+
             mass = float(mass_entry.get())
             posx, posy = map(float, position_entry.get().split(","))
             vx, vy = map(float, velocity_entry.get().split(","))
@@ -30,7 +33,9 @@ def add_body_gui():
         except ValueError as e:
             messagebox.showerror("Input Error", f"Invalid input: {e}")
 
+#
     def clear_entries():
+
         mass_entry.delete(0, tk.END)
         position_entry.delete(0, tk.END)
         velocity_entry.delete(0, tk.END)
@@ -42,24 +47,24 @@ def add_body_gui():
     body_type_var = tk.StringVar()
     body_type_var.set("Planet")
 
-    planet_radio = tk.Radiobutton(add_body_frame, text="Planet", variable=body_type_var, value="Planet")
+    planet_radio = tk.Radiobutton(add_body_frame, text="Planet", variable=body_type_var, value="Planet", bg = "black", fg = "white", font = ("Helvetica",12) )
     planet_radio.grid(row=0, column=1)
-    star_radio = tk.Radiobutton(add_body_frame, text="Star", variable=body_type_var, value="Star")
+    star_radio = tk.Radiobutton(add_body_frame, text="Star", variable=body_type_var, value="Star", fg="white", bg="black", font=("Helvetica", 12))
     star_radio.grid(row=0, column=2)
 
-    tk.Label(add_body_frame, text="Mass (1 to 15 * 10^23 kg):").grid(row=1, column=0)
-    mass_entry = tk.Entry(add_body_frame)
+    tk.Label(add_body_frame, text="Mass (1 to 15 * 10^23 kg):", fg="white", bg="black", font=("Helvetica", 12)).grid(row=1, column=0)
+    mass_entry = tk.Entry(add_body_frame, font = ("Helvetica", 12), bg ="white", fg="black")
     mass_entry.grid(row=1, column=1)
 
-    tk.Label(add_body_frame, text="Position (x, y):").grid(row=2, column=0)
-    position_entry = tk.Entry(add_body_frame)
+    tk.Label(add_body_frame, text="Position (x, y):",fg="white", bg="black", font=("Helvetica", 12)).grid(row=2, column=0)
+    position_entry = tk.Entry(add_body_frame, font = ("Helvetica",12), bg ="white", fg = "black")
     position_entry.grid(row=2, column=1)
 
-    tk.Label(add_body_frame, text="Velocity (vx, vy):").grid(row=3, column=0)
-    velocity_entry = tk.Entry(add_body_frame)
+    tk.Label(add_body_frame, text="Velocity (vx, vy):",font = ("Helvetica",12), bg ="white", fg = "black").grid(row=3, column=0)
+    velocity_entry = tk.Entry(add_body_frame,font = ("Helvetica",12), bg ="white", fg = "black" )
     velocity_entry.grid(row=3, column=1)
 
-    add_button = tk.Button(add_body_frame, text="Add Body", command=add_body)
+    add_button = tk.Button(add_body_frame, text="Add Body", command=add_body, font = ("Helvetica", 12), bg = "midnight blue", fg ="white")
     add_button.grid(row=4, columnspan=2)
 
 
@@ -79,7 +84,7 @@ def create_gui():
     root.title("GRAVITY SIMULATOR")
 
     root.resizable(False, False)
-    tk.Label(root, text="Welcome to the gravity simulation!", font=("Arial", 16)).pack(pady=10)
+    tk.Label(root, text="Welcome to the gravity simulation!", font=("Arial", 16), fg = "white", bg = "black").pack(pady=10)
 
     add_body_gui()
 
@@ -94,10 +99,10 @@ def create_gui():
     set_button = tk.Button(speed_frame, text="Set Speed", command=set_simulation_speed)
     set_button.grid(row=1, columnspan=2)'''
 
-    run_button = tk.Button(root, text="Start Simulation", command=lambda: run_simulation(bodies))
+    run_button = tk.Button(root, text="Start Simulation", command=lambda: run_simulation(bodies), font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
     run_button.pack(pady=20)
     
-    run_button = tk.Button(root, text="Quit", command=root.quit)
+    run_button = tk.Button(root, text="Quit", command=sys.exit, font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
     run_button.pack(pady=20)
 
     root.mainloop()

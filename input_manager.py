@@ -19,7 +19,6 @@ def add_body_gui():
     
     #Funzione per inserire i dati eseguita quando l'utente clicca sul pulsante 'add body'
     def add_body():
-
         body_type = body_type_var.get()
 
         try:
@@ -46,10 +45,11 @@ def add_body_gui():
 
     #Funzione che cancella i valori inseriti nei campi di input dopo che un corpo è stato aggiunto con successo
     def clear_entries():
-
         mass_entry.delete(0, tk.END)
         position_entry.delete(0, tk.END)
         velocity_entry.delete(0, tk.END)
+
+
 
     add_body_frame = tk.Frame(root, bg ='black')
     add_body_frame.pack(padx=10, pady=10)
@@ -79,17 +79,14 @@ def add_body_gui():
     add_button.grid(row=4, columnspan=2)
 
 
-
-'''def set_simulation_speed():
-
+#Funzione per impostare la velocità della simulazione
+def set_simulation_speed():
     speed = speed_scale.get()
     timeStep.setTempo(f"{speed}x")
     timeStep.step = 0.01 / speed
-    messagebox.showinfo("Success", f"Simulation speed set to {speed}x")'''
 
 #Funzione che gestisce l'intera interfaccia grafica della finestra principale 
 def create_gui():
-
     global root
     root = tk.Tk()
     root.title("GRAVITY SIMULATOR")
@@ -100,7 +97,7 @@ def create_gui():
 
     add_body_gui()
 
-    '''speed_frame = tk.Frame(root)
+    speed_frame = tk.Frame(root)
     speed_frame.pack(padx=10, pady=10)
     tk.Label(speed_frame, text="Simulation Speed (0.1x to 3x):").grid(row=0, column=0)
 
@@ -109,7 +106,7 @@ def create_gui():
     speed_scale.grid(row=0, column=1)
 
     set_button = tk.Button(speed_frame, text="Set Speed", command=set_simulation_speed)
-    set_button.grid(row=1, columnspan=2)'''
+    set_button.grid(row=1, columnspan=2)
     
     #Pulsante per avviare la simulazione, quindi i corpi si troveranno nelle posizioni e si muoveranno con le velocità scelte in input
     run_button = tk.Button(root, text="Start Simulation", command=lambda: run_simulation(bodies), font = ("Helvetica", 12), bg = "midnight blue", fg = "white")

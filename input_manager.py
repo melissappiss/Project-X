@@ -6,11 +6,18 @@ from time_manager import TimeStep
 from run import run_simulation
 import sys 
 
+#bg (background) = imposta il colore di sfondo di un widget, 
+#fg (foreground) = imposta il colore del testo del w,
+#pady aggiunge uno spazione verticale, aumentando la distanza tra il widget e gli altri elementi sopra o sotto di esso
+
+
 bodies = []
 
 
+#Funzione ch egestisce la parte dell'interfaccia per aggiugere i corpi celesti
 def add_body_gui():
-
+    
+    #Funzione per inserire i dati eseguita quando l'utente clicca sul pulsante 'add body'
     def add_body():
 
         body_type = body_type_var.get()
@@ -25,15 +32,19 @@ def add_body_gui():
                 body = Planet(mass, posx, posy, vx, vy)
             elif body_type == "Star":
                 body = Star(mass, posx, posy, vx, vy)
-
+            
+            #Aggiunta alla lista body e messaggio di conferma
             bodies.append(body)
             messagebox.showinfo("Success", f"{body_type} added successfully!")
             clear_entries()
-
+        
+        #Apparirà un messaggio di errore se l'utente inserisce dati non validi
         except ValueError as e:
             messagebox.showerror("Input Error", f"Invalid input: {e}")
 
-#
+
+
+    #Funzione che cancella i valori inseriti nei campi di input dopo che un corpo è stato aggiunto con successo
     def clear_entries():
 
         mass_entry.delete(0, tk.END)
@@ -76,13 +87,14 @@ def add_body_gui():
     timeStep.step = 0.01 / speed
     messagebox.showinfo("Success", f"Simulation speed set to {speed}x")'''
 
-
+#Funzione che gestisce l'intera interfaccia grafica della finestra principale 
 def create_gui():
 
     global root
     root = tk.Tk()
     root.title("GRAVITY SIMULATOR")
-
+    
+    #I valori False servono per mantenere fissa la finestra principale dell'interfaccia
     root.resizable(False, False)
     tk.Label(root, text="Welcome to the gravity simulation!", font=("Arial", 16), fg = "white", bg = "black").pack(pady=10)
 
@@ -98,10 +110,12 @@ def create_gui():
 
     set_button = tk.Button(speed_frame, text="Set Speed", command=set_simulation_speed)
     set_button.grid(row=1, columnspan=2)'''
-
+    
+    #Pulsante per avviare la simulazione, quindi i corpi si troveranno nelle posizioni e si muoveranno con le velocità scelte in input
     run_button = tk.Button(root, text="Start Simulation", command=lambda: run_simulation(bodies), font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
     run_button.pack(pady=20)
     
+    #Pulsante per chiudere l'applicazione
     run_button = tk.Button(root, text="Quit", command=sys.exit, font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
     run_button.pack(pady=20)
 

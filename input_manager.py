@@ -10,7 +10,7 @@ import sys
 #fg (foreground) = imposta il colore del testo del w,
 #pady aggiunge uno spazione verticale, aumentando la distanza tra il widget e gli altri elementi sopra o sotto di esso
 
-
+#Lista per memorizzare i corpi inseriti
 bodies = []
 
 
@@ -71,42 +71,44 @@ def add_body_gui():
     position_entry = tk.Entry(add_body_frame, font = ("Helvetica",12), bg ="white", fg = "black")
     position_entry.grid(row=2, column=1)
 
-    tk.Label(add_body_frame, text="Velocity (vx, vy):",font = ("Helvetica",12), bg ="white", fg = "black").grid(row=3, column=0)
+    tk.Label(add_body_frame, text="Velocity (vx, vy):", fg ="white", bg = "black", font = ("Helvetica",12)).grid(row=3, column=0)
     velocity_entry = tk.Entry(add_body_frame,font = ("Helvetica",12), bg ="white", fg = "black" )
     velocity_entry.grid(row=3, column=1)
 
     add_button = tk.Button(add_body_frame, text="Add Body", command=add_body, font = ("Helvetica", 12), bg = "midnight blue", fg ="white")
-    add_button.grid(row=4, columnspan=2)
+    add_button.grid(row=4, columnspan=3)
 
 
 #Funzione per impostare la velocità della simulazione
 def set_simulation_speed():
     speed = speed_scale.get()
-    timeStep.setTempo(f"{speed}x")
-    timeStep.step = 0.01 / speed
+    TimeStep.setTempo(f"{speed}x")
+    TimeStep.step = 0.01 / speed
 
 #Funzione che gestisce l'intera interfaccia grafica della finestra principale 
 def create_gui():
     global root
     root = tk.Tk()
     root.title("GRAVITY SIMULATOR")
+
+    root.config(bg='black')
     
-    #I valori False servono per mantenere fissa la finestra principale dell'interfaccia
+    #I valori False servono per mantenere fisse le dimensioni della finestra principale dell'interfaccia
     root.resizable(False, False)
-    tk.Label(root, text="Welcome to the gravity simulation!", font=("Arial", 16), fg = "white", bg = "black").pack(pady=10)
+    tk.Label(root, text="Welcome to the gravity simulation!", font=("Arial", 16), fg = "yellow", bg = "black").pack(pady=10)
 
     add_body_gui()
 
     speed_frame = tk.Frame(root)
     speed_frame.pack(padx=10, pady=10)
-    tk.Label(speed_frame, text="Simulation Speed (0.1x to 3x):").grid(row=0, column=0)
+    tk.Label(speed_frame, text="Simulation Speed (0.1x to 3x):",font = ("Helvetica",12), bg ="white", fg = "black").grid(row=0, column=0)
 
-    speed_scale = tk.Scale(speed_frame, from_=0.1, to=3, orient="horizontal", resolution=0.1, length=50)
+    speed_scale = tk.Scale(speed_frame, from_=0.1, to=3, orient="horizontal", resolution=0.1, length=50, bg="black", fg="white")
     speed_scale.set(1)
-    speed_scale.grid(row=0, column=1)
+    speed_scale.grid(row=1, column=0)
 
-    set_button = tk.Button(speed_frame, text="Set Speed", command=set_simulation_speed)
-    set_button.grid(row=1, columnspan=2)
+    set_button = tk.Button(speed_frame, text="Set Speed", command=set_simulation_speed, font=("Helvetica", 12), bg="midnight blue", fg="white")
+    set_button.grid(row=2, columnspan=2)
     
     #Pulsante per avviare la simulazione, quindi i corpi si troveranno nelle posizioni e si muoveranno con le velocità scelte in input
     run_button = tk.Button(root, text="Start Simulation", command=lambda: run_simulation(bodies), font = ("Helvetica", 12), bg = "midnight blue", fg = "white")

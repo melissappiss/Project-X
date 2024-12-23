@@ -8,7 +8,7 @@ import sys
 
 #bg (background) = imposta il colore di sfondo di un widget, 
 #fg (foreground) = imposta il colore del testo del w,
-#pady aggiunge uno spazione verticale, aumentando la distanza tra il widget e gli altri elementi sopra o sotto di esso
+#pady aggiunge uno spazione verticale, aumentando la distanza tra il widget e gli altri elementi, sopra o sotto di esso
 
 #Lista per memorizzare i corpi inseriti
 bodies = []
@@ -24,9 +24,11 @@ def add_body_gui():
         try:
 
             mass = float(mass_entry.get())
-            posx, posy = map(float, position_entry.get().split(","))
-            vx, vy = map(float, velocity_entry.get().split(","))
-            
+            posx = float(posx_entry.get())
+            posy= float(posx_entry.get())
+            vx = float(vx_entry.get())
+            vy = float(vy_entry.get())
+                        
             if body_type == "Planet":
                 body = Planet(mass, posx, posy, vx, vy)
             elif body_type == "Star":
@@ -46,8 +48,10 @@ def add_body_gui():
     #Funzione che cancella i valori inseriti nei campi di input dopo che un corpo è stato aggiunto con successo
     def clear_entries():
         mass_entry.delete(0, tk.END)
-        position_entry.delete(0, tk.END)
-        velocity_entry.delete(0, tk.END)
+        posx_entry.delete(0, tk.END)
+        posy_entry.delete(0, tk.END)
+        vx_entry.delete(0, tk.END)
+        vy_entry.delete(0, tk.END)
 
 
 

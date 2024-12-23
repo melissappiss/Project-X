@@ -13,13 +13,13 @@ import sys
 #Lista per memorizzare i corpi inseriti
 bodies = []
 
-
 #Funzione ch egestisce la parte dell'interfaccia per aggiugere i corpi celesti
 def add_body_gui():
-    
+
     #Funzione per inserire i dati eseguita quando l'utente clicca sul pulsante 'add body'
     def add_body():
         body_type = body_type_var.get()
+        #print(f"Selected body type: {body_type}")
 
         try:
 
@@ -53,30 +53,44 @@ def add_body_gui():
 
     add_body_frame = tk.Frame(root, bg ='black')
     add_body_frame.pack(padx=10, pady=10)
-
+    
+    #Radiobutton per scegliere il tipo di corpo celeste
     tk.Label(add_body_frame, text="Body Type (Planet/Star):", fg ="white",bg = "black", font = ("Helvetica",12)).grid(row=0, column=0)
     body_type_var = tk.StringVar()
     body_type_var.set("Planet")
+    
 
-    planet_radio = tk.Radiobutton(add_body_frame, text="Planet", variable=body_type_var, value="Planet", bg = "black", fg = "white", font = ("Helvetica",12) )
+    planet_radio = tk.Radiobutton(add_body_frame, text="Planet", variable=body_type_var, value="Planet", bg="black", selectcolor="black", indicatoron = 1, fg="white", font = ("Helvetica",12) )
     planet_radio.grid(row=0, column=1)
-    star_radio = tk.Radiobutton(add_body_frame, text="Star", variable=body_type_var, value="Star", fg="white", bg="black", font=("Helvetica", 12))
+    star_radio = tk.Radiobutton(add_body_frame, text="Star", variable=body_type_var, value="Star", bg="black", selectcolor="black", indicatoron = 1, fg="white", font = ("Helvetica",12))
     star_radio.grid(row=0, column=2)
-
+    
+    #Campo per scegliere la massa 
     tk.Label(add_body_frame, text="Mass (1 to 15 * 10^23 kg):", fg="white", bg="black", font=("Helvetica", 12)).grid(row=1, column=0)
-    mass_entry = tk.Entry(add_body_frame, font = ("Helvetica", 12), bg ="white", fg="black")
+    mass_entry = tk.Entry(add_body_frame, font = ("Helvetica", 12), bg ="black", fg="white")
     mass_entry.grid(row=1, column=1)
+    
+    #Campo per la posizione (x, y)
+    tk.Label(add_body_frame, text="Position (x, y):", fg="white", bg="black", font=("Helvetica", 12)).grid(row=2, column=0, sticky="w")
 
-    tk.Label(add_body_frame, text="Position (x, y):",fg="white", bg="black", font=("Helvetica", 12)).grid(row=2, column=0)
-    position_entry = tk.Entry(add_body_frame, font = ("Helvetica",12), bg ="white", fg = "black")
-    position_entry.grid(row=2, column=1)
+    posx_entry = tk.Entry(add_body_frame, font=("Helvetica", 12), bg="black", fg="white", width=7)
+    posx_entry.grid(row=2, column=1, padx=(5, 0))
 
-    tk.Label(add_body_frame, text="Velocity (vx, vy):", fg ="white", bg = "black", font = ("Helvetica",12)).grid(row=3, column=0)
-    velocity_entry = tk.Entry(add_body_frame,font = ("Helvetica",12), bg ="white", fg = "black" )
-    velocity_entry.grid(row=3, column=1)
+    posy_entry = tk.Entry(add_body_frame, font=("Helvetica", 12), bg="black", fg="white", width=7)
+    posy_entry.grid(row=2, column=2)
 
-    add_button = tk.Button(add_body_frame, text="Add Body", command=add_body, font = ("Helvetica", 12), bg = "midnight blue", fg ="white")
-    add_button.grid(row=4, columnspan=3)
+    #Campo per la velocità (vx, vy)
+    tk.Label(add_body_frame, text="Velocity (vx, vy):", fg="white", bg="black", font=("Helvetica", 12)).grid(row=3, column=0, sticky="w")
+
+    vx_entry = tk.Entry(add_body_frame, font=("Helvetica", 12), bg="black", fg="white", width=7)
+    vx_entry.grid(row=3, column=1, padx=(5, 0))
+
+    vy_entry = tk.Entry(add_body_frame, font=("Helvetica", 12), bg="black", fg="white", width=7)
+    vy_entry.grid(row=3, column=2)
+
+    #Pulsante per aggiungere il corpo
+    add_button = tk.Button(add_body_frame, text="Add Body", command=add_body, font=("Helvetica", 12), bg="midnight blue", fg="white")
+    add_button.grid(row=4, columnspan=4, pady=10)
 
 
 #Funzione per impostare la velocità della simulazione
@@ -99,15 +113,15 @@ def create_gui():
 
     add_body_gui()
 
-    speed_frame = tk.Frame(root)
+    speed_frame = tk.Frame(root, bg ="black")
     speed_frame.pack(padx=10, pady=10)
-    tk.Label(speed_frame, text="Simulation Speed (0.1x to 3x):",font = ("Helvetica",12), bg ="white", fg = "black").grid(row=0, column=0)
+    tk.Label(speed_frame, text="Simulation Speed:",font = ("Helvetica",12), bg ="black", fg = "white").grid(row=0, column=0)
 
-    speed_scale = tk.Scale(speed_frame, from_=0.1, to=3, orient="horizontal", resolution=0.1, length=50, bg="black", fg="white")
+    speed_scale = tk.Scale(speed_frame, from_=0.1, to=3, orient="horizontal", resolution=0.1, length=50, bg="midnight blue", fg="white")
     speed_scale.set(1)
     speed_scale.grid(row=1, column=0)
 
-    set_button = tk.Button(speed_frame, text="Set Speed", command=set_simulation_speed, font=("Helvetica", 12), bg="midnight blue", fg="white")
+    set_button = tk.Button(speed_frame, text="Set Speed", command=set_simulation_speed, bg="midnight blue", fg="white",font=("Helvetica", 12))
     set_button.grid(row=2, columnspan=2)
     
     #Pulsante per avviare la simulazione, quindi i corpi si troveranno nelle posizioni e si muoveranno con le velocità scelte in input

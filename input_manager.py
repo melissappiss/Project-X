@@ -46,6 +46,7 @@ def add_body_gui():
 
 
     #Funzione che cancella i valori inseriti nei campi di input dopo che un corpo è stato aggiunto con successo
+    #0 (primo carattere)--> tk.END(ultimo carattere)
     def clear_entries():
         mass_entry.delete(0, tk.END)
         posx_entry.delete(0, tk.END)
@@ -96,12 +97,15 @@ def add_body_gui():
     add_button = tk.Button(add_body_frame, text="Add Body", command=add_body, font=("Helvetica", 12), bg="midnight blue", fg="white")
     add_button.grid(row=4, columnspan=4, pady=10)
 
+# Creazione di un'istanza di TimeStep, cioè viene creato un oggetto usando la classe TimeStep
+time_step = TimeStep() 
 
 #Funzione per impostare la velocità della simulazione
-def set_simulation_speed():
-    speed = speed_scale.get()
-    TimeStep.setTempo(f"{speed}x")
-    TimeStep.step = 0.01 / speed
+def set_simulation_speed(scale):
+    speed = scale.get()
+    time_step.setTempo(f"{speed}x")
+    #Maggiore è speed dato dall'utente, più velocemente procede la simulazione (step)
+    time_step.step = 0.01 / speed
 
 #Funzione che gestisce l'intera interfaccia grafica della finestra principale 
 def create_gui():
@@ -122,13 +126,15 @@ def create_gui():
     tk.Label(speed_frame, text="Simulation Speed:",font = ("Helvetica",12), bg ="black", fg = "white").grid(row=0, column=0)
 
     speed_scale = tk.Scale(speed_frame, from_=0.1, to=3, orient="horizontal", resolution=0.1, length=50, bg="midnight blue", fg="white")
+    #Funzione che permette di impostare la velocità di simulazione ad 1
     speed_scale.set(1)
     speed_scale.grid(row=1, column=0)
 
-    set_button = tk.Button(speed_frame, text="Set Speed", command=set_simulation_speed, bg="midnight blue", fg="white",font=("Helvetica", 12))
+    set_button = tk.Button(speed_frame, text="Set Speed", command=lambda: set_simulation_speed(speed_scale), bg="midnight blue", fg="white",font=("Helvetica", 12))
     set_button.grid(row=2, columnspan=2)
     
     #Pulsante per avviare la simulazione, quindi i corpi si troveranno nelle posizioni e si muoveranno con le velocità scelte in input
+    #Con command = lambda viene creata una funzione anonima che esegue run_simulation di run solo quando viene cliccato il pulsante Start
     run_button = tk.Button(root, text="Start Simulation", command=lambda: run_simulation(bodies), font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
     run_button.pack(pady=20)
     

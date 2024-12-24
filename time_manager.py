@@ -1,6 +1,7 @@
 import time, math
 
 class TimeStep:
+	
 	def __init__(self, step=0.01, tempo=1.0):
 		self.step = step
 		self.elapsed_time = 0.0

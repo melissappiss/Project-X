@@ -138,8 +138,11 @@ def create_gui():
     run_button = tk.Button(root, text="Start Simulation", command=lambda: run_simulation(bodies), font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
     run_button.pack(pady=20)
     
-    #Pulsante per chiudere l'applicazione
-    run_button = tk.Button(root, text="Quit", command=sys.exit, font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
+    #Pulsante per chiudere l'applicazione solo una volta che la simulazione termina
+    #run_button = tk.Button(root, text="Quit", command=sys.exit, font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
+    
+    #Pulsante per chiudere l'app anche quando la simulazione è ancora in esecuzione
+    run_button = tk.Button(root, text = "Quit", command = root.destroy, font = ("Helvetica",12), bg = "midnight blue", fg = "white")
     run_button.pack(pady=20)
 
     root.mainloop()

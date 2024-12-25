@@ -13,6 +13,10 @@ import sys
 #Lista per memorizzare i corpi inseriti
 bodies = []
 
+#Aggiunta di un controllo per limitare posizione e velocità dei corpi inseriti
+simulation_bounds = 400 #realisticamente :1e10 (10miliardi)
+velocity_limit = 200 #100.000
+
 #Funzione ch egestisce la parte dell'interfaccia per aggiugere i corpi celesti
 def add_body_gui():
 
@@ -25,10 +29,20 @@ def add_body_gui():
 
             mass = float(mass_entry.get())
             posx = float(posx_entry.get())
-            posy= float(posx_entry.get())
+            posy= float(posy_entry.get())
             vx = float(vx_entry.get())
             vy = float(vy_entry.get())
-                        
+
+            #Aggiunta di controlli per poszioni e velocicità
+            if abs(posx) >simulation_bounds :
+                posx = simulation_bounds * (1 if posx > 0 else -1)
+            if abs(posy) > simulation_bounds: 
+                posy = simulation_bounds * (1 if posy > 0 else -1)
+            if abs(vx) > velocity_limit:
+                vx = velocity_limit * (1 if vx > 0 else -1)
+            if abs(vy) > velocity_limit:
+                vy = velocity_limit * (1 if vy > 0 else -1)
+
             if body_type == "Planet":
                 body = Planet(mass, posx, posy, vx, vy)
             elif body_type == "Star":
@@ -142,7 +156,7 @@ def create_gui():
     #run_button = tk.Button(root, text="Quit", command=sys.exit, font = ("Helvetica", 12), bg = "midnight blue", fg = "white")
     
     #Pulsante per chiudere l'app anche quando la simulazione è ancora in esecuzione
-    run_button = tk.Button(root, text = "Quit", command = root.destroy, font = ("Helvetica",12), bg = "midnight blue", fg = "white")
+    #run_button = tk.Button(root, text = "Quit", command = root.destroy, font = ("Helvetica",12), bg = "midnight blue", fg = "white")
     run_button.pack(pady=20)
 
     root.mainloop()

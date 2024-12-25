@@ -58,6 +58,11 @@ def run_simulation(bodies):
         timeStep.nextStep()
         physicsManager.applyAllForces()
 
+        '''# Applica le forze solo ai corpi con velocità non nulla
+        for body in bodies:
+            if body.speed_x != 0 or body.speed_y != 0:
+                physicsManager.applyAllForces()'''
+
         for body in bodies:
             body.updateAll(timeStep.getStepTime(), timeStep.getTempo())
             body.draw()

@@ -14,8 +14,8 @@ import sys
 bodies = []
 
 #Aggiunta di un controllo per limitare posizione e velocità dei corpi inseriti
-simulation_bounds = 400 #realisticamente :1e10 (10miliardi)
-velocity_limit = 200 #100.000
+#simulation_bounds = 400 #realisticamente :1e10 (10miliardi)
+#velocity_limit = 200 #100.000
 
 #Funzione ch egestisce la parte dell'interfaccia per aggiugere i corpi celesti
 def add_body_gui():
@@ -33,15 +33,18 @@ def add_body_gui():
             vx = float(vx_entry.get())
             vy = float(vy_entry.get())
 
-            #Aggiunta di controlli per poszioni e velocicità
-            if abs(posx) >simulation_bounds :
-                posx = simulation_bounds * (1 if posx > 0 else -1)
-            if abs(posy) > simulation_bounds: 
-                posy = simulation_bounds * (1 if posy > 0 else -1)
-            if abs(vx) > velocity_limit:
-                vx = velocity_limit * (1 if vx > 0 else -1)
-            if abs(vy) > velocity_limit:
-                vy = velocity_limit * (1 if vy > 0 else -1)
+            if mass <= 0:
+                #solleva un'eccezione:
+                raise ValueError("Mass must be greater than zero.")
+            
+            '''
+            if not (-300 <= posx <= 300) or not (-300 <= posy <=300):
+                raise ValueError("Position out of bounds (50 to 1150 for x, 50 to 750 for y)")
+            
+            if not (-300 <= vx <= 300) or not (-300 <= vy <= 300):
+                raise ValueError("Velocity out of bounds (-10 to 10 for vx, vy)")
+            '''
+
 
             if body_type == "Planet":
                 body = Planet(mass, posx, posy, vx, vy)
@@ -85,7 +88,7 @@ def add_body_gui():
     star_radio.grid(row=0, column=2)
     
     #Campo per scegliere la massa 
-    tk.Label(add_body_frame, text="Mass (1 to 15 * 10^23 kg):", fg="white", bg="black", font=("Helvetica", 12)).grid(row=1, column=0)
+    tk.Label(add_body_frame, text="Mass (0.1 to 15 * 10^23 kg):", fg="white", bg="black", font=("Helvetica", 12)).grid(row=1, column=0)
     mass_entry = tk.Entry(add_body_frame, font = ("Helvetica", 12), bg ="black", fg="white")
     mass_entry.grid(row=1, column=1)
     
